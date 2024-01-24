@@ -4,8 +4,9 @@
   "description": "",
   "main": "src/app.ts",
   "scripts": {
-    "compile": "tsc && node ./build/src/app.js",
-    "start": "nodemon -e ts --exec \"npm run compile\""
+    "local": "sls offline",
+    "deploy-dev": "sls deploy --stage dev",
+    "deploy-prod": "sls deploy --stage prod"
   },
   "keywords": [],
   "author": "",
