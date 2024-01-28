@@ -4,9 +4,11 @@ import userRouter from "./presentation/routes/user_router";
 import chargerRouter from "./presentation/routes/charger_router";
 import reviewRouter from "./presentation/routes/review_router";
 import faultReportRouter from "./presentation/routes/fault_report_router";
+import logger from "morgan";
 
 const app = express();
 app.use(express.json());
+app.use(logger("dev"));
 
 app.use("/user", userRouter);
 app.use("/charger", chargerRouter);
