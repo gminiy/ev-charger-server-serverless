@@ -130,7 +130,7 @@ export class ReviewRepositoryImpl implements ReviewRepository {
         }
       }
     }
-    queryStr = queryStr + `updated_at = ${nowUnix} WHERE id = ${attrs.id}`;
+    queryStr = queryStr + `updated_at = ${nowUnix} WHERE id = '${attrs.id}'`;
     await this.db.query(queryStr);
 
     const updatedReviewModel = await this.getReviewById(attrs.id);

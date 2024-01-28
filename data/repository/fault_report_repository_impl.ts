@@ -134,7 +134,7 @@ export class FaultReportRepositoryImpl implements FaultReportRepository {
         }
       }
     }
-    queryStr = queryStr + `updated_at = ${nowUnix} WHERE id = ${attrs.id}`;
+    queryStr = queryStr + `updated_at = ${nowUnix} WHERE id = '${attrs.id}'`;
     await this.db.query(queryStr);
 
     const updatedFaultReportModel = await this.getFaultReportById(attrs.id);

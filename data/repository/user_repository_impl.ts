@@ -80,7 +80,7 @@ export class UserRepositoryImpl implements UserRepository {
         }
       }
     }
-    queryStr = queryStr + `updated_at = ${nowUnix} WHERE id = ${attrs.id}`;
+    queryStr = queryStr + `updated_at = ${nowUnix} WHERE id = '${attrs.id}'`;
 
     await this.db.query(queryStr);
 
