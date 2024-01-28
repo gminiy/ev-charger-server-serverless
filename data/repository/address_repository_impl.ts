@@ -30,10 +30,3 @@ export class AddressRepositoryimpl implements AddressRepository {
     return addressEntities.map((e) => new AddressModel(e.id, e.address));
   }
 }
-
-(async () => {
-  const db = new MySql();
-  const a = new AddressRepositoryimpl(db);
-
-  console.log(await a.findAddressses());
-})();
