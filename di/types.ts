@@ -8,6 +8,8 @@ const TYPES = {
   ReviewController: Symbol.for("ReviewController"),
   FaultReportRepository: Symbol.for("FaultReportRepository"),
   FaultReportController: Symbol.for("FaultReportController"),
+  AddressRepository: Symbol.for("AddressRepository"),
+  AddressController: Symbol.for("AddressController"),
 };
 
 export { TYPES };
