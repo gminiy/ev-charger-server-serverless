@@ -9,12 +9,18 @@ export class AddressRepositoryimpl implements AddressRepository {
   constructor(@inject(TYPES.MySql) private db: MySql) {}
 
   // Todo: address 검색 index 설정
-  async findAddressses(pattern: string): Promise<AddressModel[]> {
-    const searchPattern = `%${pattern}%`;
-    const rows = await this.db.query(
-      `SELECT * FROM ${Tables.addresses} WHERE address LIKE ? AND deleted_at IS NULL`,
-      [searchPattern]
-    );
+  async findAddressses(pattern?: string): Promise<AddressModel[]> {
+    let queryStr = `SELECT * FROM ${Tables.addresses} WHERE deleted_at IS NULL`;
+    const queryParams = [];
+
+    if (pattern) {
+      queryStr += ` AND address LIKE ?`;
+      const searchPattern = `%${pattern}%`;
+      queryParams.push(searchPattern);
+    }
+
+    const rows = await this.db.query(queryStr, queryParams);
+
     const addressEntities = rows as AddressEntity[];
 
     if (addressEntities.length == 0) {
@@ -24,3 +30,10 @@ export class AddressRepositoryimpl implements AddressRepository {
     return addressEntities.map((e) => new AddressModel(e.id, e.address));
   }
 }
+
+(async () => {
+  const db = new MySql();
+  const a = new AddressRepositoryimpl(db);
+
+  console.log(await a.findAddressses());
+})();
