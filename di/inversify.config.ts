@@ -14,6 +14,9 @@ import { ReviewController } from "../presentation/controller/review_controller";
 import { FaultReportRepository } from "../domain/repository/fault_report_repository";
 import { FaultReportRepositoryImpl } from "../data/repository/fault_report_repository_impl";
 import { FaultReportController } from "../presentation/controller/fault_report_controller";
+import { AddressRepository } from "../domain/repository/address_repository";
+import { AddressRepositoryimpl } from "../data/repository/address_repository_impl";
+import { AddressController } from "../presentation/controller/address_controller";
 
 const container = new Container();
 
@@ -40,5 +43,12 @@ container
 container
   .bind<FaultReportController>(TYPES.FaultReportController)
   .to(FaultReportController);
+
+container
+  .bind<AddressRepository>(TYPES.AddressRepository)
+  .to(AddressRepositoryimpl);
+container
+  .bind<AddressController>(TYPES.AddressController)
+  .to(AddressController);
 
 export { container };
