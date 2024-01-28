@@ -1,10 +1,11 @@
-import { inject } from "inversify";
+import { inject, injectable } from "inversify";
 import { AddressModel } from "../../domain/model/address_model";
 import { AddressRepository } from "../../domain/repository/address_repository";
 import { MySql, Tables } from "../db/mysql";
 import { TYPES } from "../../di/types";
 import { AddressEntity } from "../entity/address_entity";
 
+@injectable()
 export class AddressRepositoryimpl implements AddressRepository {
   constructor(@inject(TYPES.MySql) private db: MySql) {}
 
