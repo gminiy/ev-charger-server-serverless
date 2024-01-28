@@ -19,6 +19,7 @@ router.get("/", async (req, res, next) => {
     const user = await userController.getUserById(id.toString());
 
     if (!user) {
+      res.status(404);
       res.send();
       return;
     }
