@@ -26,6 +26,7 @@ export class ChargerRepositoryImpl implements ChargerRepository {
       (e) =>
         new ChargerModel(
           e.id,
+          e.address_id,
           e.charger_type,
           e.location,
           e.status,
@@ -52,6 +53,7 @@ export class ChargerRepositoryImpl implements ChargerRepository {
 
     return new ChargerModel(
       chargerEntity.id,
+      chargerEntity.address_id,
       chargerEntity.charger_type,
       chargerEntity.location,
       chargerEntity.status,
