@@ -10,6 +10,40 @@ const chargerController = container.get<ChargerController>(
 );
 router.get("/", async (req, res, next) => {
   try {
+    const { chargerId } = req.query;
+
+    if (!chargerId || typeof chargerId !== "string") {
+      throw Error();
+    }
+
+    const charger = await chargerController.getCharger(chargerId.toString());
+
+    if (!charger) {
+      res.status(404);
+      res.send();
+      return;
+    }
+
+    const response = {
+      id: charger.id,
+      chargeType: charger.chargeType,
+      location: charger.location,
+      status: charger.status,
+      lastStatusUpdatedAt: charger.lastStatusUpdatedAt,
+      output: charger.output,
+      lastStartChargingTimestamp: charger.lastStartChargingTimestamp,
+      lastEndChargingTimestamp: charger.lastEndChargingTimestamp,
+    };
+
+    res.json(response);
+  } catch (e) {
+    console.log(e);
+    next(e);
+  }
+});
+
+router.get("/address", async (req, res, next) => {
+  try {
     const { addressId } = req.query;
 
     if (!addressId || typeof addressId !== "string") {

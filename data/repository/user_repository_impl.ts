@@ -65,7 +65,7 @@ export class UserRepositoryImpl implements UserRepository {
   async updateUser(attrs: UpdateUserAttrs): Promise<UserModel> {
     const nowUnix: number = Math.floor(Date.now() / 1000);
     let queryStr = `UPDATE ${Tables.users} SET `;
-
+    console.log(attrs);
     for (let attr of Object.keys(attrs)) {
       if (attrs[attr] !== undefined) {
         switch (attr) {

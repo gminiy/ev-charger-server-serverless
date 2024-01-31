@@ -36,4 +36,29 @@ export class ChargerRepositoryImpl implements ChargerRepository {
         )
     );
   }
+
+  async getCharger(chargerId: string): Promise<ChargerModel | void> {
+    const rows = await this.db.query(
+      `SELECT * FROM ${Tables.chargers} WHERE id = ? AND deleted_at IS NULL`,
+      [chargerId]
+    );
+
+    const chargerEntities = rows as ChargerEntity[];
+
+    if (chargerEntities.length == 0) {
+      return;
+    }
+    const chargerEntity: ChargerEntity = chargerEntities[0];
+
+    return new ChargerModel(
+      chargerEntity.id,
+      chargerEntity.charger_type,
+      chargerEntity.location,
+      chargerEntity.status,
+      chargerEntity.last_status_updated_at,
+      chargerEntity.output,
+      chargerEntity.last_start_charging_timestamp,
+      chargerEntity.last_end_charging_timestamp
+    );
+  }
 }

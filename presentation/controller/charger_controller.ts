@@ -13,4 +13,8 @@ export class ChargerController {
   async getChargersByAddressId(addressId: string) {
     return await this.chargerRepository.queryChargersByAddressId(addressId);
   }
+
+  async getCharger(chargerId: string) {
+    return await this.chargerRepository.getCharger(chargerId);
+  }
 }
