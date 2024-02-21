@@ -27,6 +27,7 @@ router.get("/", async (req, res, next) => {
     const response = {
       id: charger.id,
       addressId: charger.addressId,
+      address: charger.address,
       chargeType: charger.chargeType,
       location: charger.location,
       status: charger.status,
@@ -59,6 +60,7 @@ router.get("/address", async (req, res, next) => {
       return {
         id: charger.id,
         addressId: charger.addressId,
+        address: charger.address,
         chargeType: charger.chargeType,
         location: charger.location,
         status: charger.status,

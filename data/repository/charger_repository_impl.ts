@@ -6,17 +6,23 @@ import { ChargerEntity } from "../entity/charger_entity";
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../di/types";
 
+export interface ChargerEntityWithAddress extends ChargerEntity {
+  address: string;
+}
+
 @injectable()
 export class ChargerRepositoryImpl implements ChargerRepository {
   constructor(@inject(TYPES.MySql) private db: MySql) {}
 
   async queryChargersByAddressId(addressId: string): Promise<ChargerModel[]> {
     const rows = await this.db.query(
-      `SELECT * FROM ${Tables.chargers} WHERE address_id = ? AND deleted_at IS NULL`,
+      `SELECT ${Tables.chargers}.*, ${Tables.addresses}.address FROM ${Tables.chargers}
+      LEFT JOIN ${Tables.addresses} ON ${Tables.chargers}.address_id = ${Tables.addresses}.id
+      WHERE ${Tables.chargers}.address_id = ? AND ${Tables.chargers}.deleted_at IS NULL`,
       [addressId]
     );
 
-    const chargerEntities = rows as ChargerEntity[];
+    const chargerEntities = rows as ChargerEntityWithAddress[];
 
     if (chargerEntities.length == 0) {
       return [];
@@ -27,6 +33,7 @@ export class ChargerRepositoryImpl implements ChargerRepository {
         new ChargerModel(
           e.id,
           e.address_id,
+          e.address,
           e.charger_type,
           e.location,
           e.status,
@@ -40,20 +47,23 @@ export class ChargerRepositoryImpl implements ChargerRepository {
 
   async getCharger(chargerId: string): Promise<ChargerModel | void> {
     const rows = await this.db.query(
-      `SELECT * FROM ${Tables.chargers} WHERE id = ? AND deleted_at IS NULL`,
+      `SELECT ${Tables.chargers}.*, ${Tables.addresses}.address FROM ${Tables.chargers}
+      LEFT JOIN ${Tables.addresses} ON ${Tables.chargers}.address_id = ${Tables.addresses}.id
+      WHERE ${Tables.chargers}.id = ? AND ${Tables.chargers}.deleted_at IS NULL`,
       [chargerId]
     );
 
-    const chargerEntities = rows as ChargerEntity[];
+    const chargerEntities = rows as ChargerEntityWithAddress[];
 
     if (chargerEntities.length == 0) {
       return;
     }
-    const chargerEntity: ChargerEntity = chargerEntities[0];
+    const chargerEntity: ChargerEntityWithAddress = chargerEntities[0];
 
     return new ChargerModel(
       chargerEntity.id,
       chargerEntity.address_id,
+      chargerEntity.address,
       chargerEntity.charger_type,
       chargerEntity.location,
       chargerEntity.status,

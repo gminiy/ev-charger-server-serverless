@@ -21,7 +21,7 @@ export class UserRepositoryImpl implements UserRepository {
   async putUser(attrs: PutUserAttrs): Promise<UserModel> {
     const nowUnix: number = Math.floor(Date.now() / 1000);
     const nickname: string = attrs.nickname ?? "unnamed";
-
+    console.log(attrs);
     await this.db.query(
       `INSERT INTO ${Tables.users} (id, nickname, address_id, created_at, updated_at) VALUES (?, ?, ?, ?, ?)`,
       [attrs.id, nickname, attrs.addressId ?? undefined, nowUnix, nowUnix]

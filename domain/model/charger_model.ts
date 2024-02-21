@@ -2,6 +2,7 @@ export class ChargerModel {
   constructor(
     public id: string,
     public addressId: string,
+    public address: string,
     public chargeType: number,
     public location: string,
     public status: number,

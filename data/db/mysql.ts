@@ -7,7 +7,7 @@ export enum Tables {
   users = "users",
   addresses = "addresses",
   chargers = "chargers",
-  faultReports = "falut_reports",
+  faultReports = "fault_reports",
   reviews = "reviews",
 }
 
